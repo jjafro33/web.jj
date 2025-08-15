@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JJ MUZIC HUB</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+    body{background:#121212;color:#b88787;overflow-x:hidden;}
+
+    header{background:#1f1f1f;padding:20px 40px;box-shadow:0 4px 8px rgba(0,0,0,0.5);display:flex;justify-content:space-between;align-items:center;}
+    .tabs{display:flex;gap:20px;}
+    .tabs button{
+      background:#2b2b2b;color:#fff;border:none;
+      padding:10px 20px;border-radius:8px;font-weight:600;
+      cursor:pointer;transition:.3s;
+    }
+    .tabs button.active{background:#ff4f88;}
+    .tabs button:hover:not(.active){background:#444;}
+
+    .section{display:none;padding:40px;}
+    .section.active{display:block;}
+
+    /*  Home  */
+    .hero{background:url('https://images.unsplash.com/photo-1511379938547-c1f69419868d') center/cover no-repeat;text-align:center;padding:120px 20px;border-radius:12px;}
+    .hero h1{font-size:3rem;margin-bottom:15px;}
+    .btn{display:inline-block;margin-top:20px;padding:14px 35px;background:#ff4f88;color:#fff;border-radius:40px;text-decoration:none;font-weight:600;transition:transform .2s;}
+    .btn:hover{transform:scale(1.05);}
+
+    /* Tracks */
+    .tracks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;max-width:1100px;margin: auto;}
+    .track-card{background:#1e1e1e;border-radius:16px;overflow:hidden;padding-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,0.4);transition:transform .2s;}
+    .track-card:hover{transform:translateY(-5px);}
+    .track-card img{width:100%;height:180px;object-fit:cover;}
+    .track-info{padding:15px;text-align:center;}
+    .track-info h3{margin-bottom:10px;}
+
+    /* Login */
+    .login-box{background:#1e1e1e;padding:40px;width:90%;max-width:430px;margin:auto;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.5);}
+    .login-box input{width:100%;padding:12px;margin-bottom:15px;border:none;border-radius:8px;background:#2f2f2f;color:#fff;}
+    .login-box .btn-submit{width:100%;background:#ff4f88;border:none;border-radius:8px;padding:14px;font-weight:600;margin-top:5px;}
+    .google-btn{width:100%;padding:14px;margin-top:8px;background:#ffffff;color:#000;border-radius:8px;font-weight:600;display:flex;justify-content:center;align-items:center;gap:10px;}
+    .google-btn img{width:20px;}
+
+    footer{text-align:center;padding:25px;background:#1f1f1f;color:#aaa;margin-top:60px;}
+  </style>
+</head>
+<body>
+
+<header>
+  <h2>🎵 JJ MUZIC HUB</h2>
+  <div class="tabs">
+    <button class="tab active" onclick="showSection('home')">Home</button>
+    <button class="tab" onclick="showSection('tracks')">Tracks</button>
+    <button class="tab" onclick="showSection('login')">Login / Signup</button>
+  </div>
+</header>
+
+<!-- HOME -->
+<section id="home" class="section active">
+  <div class="hero">
+    <h1>Discover Independent Music</h1>
+    <p>The home for upcoming talented artists — explore, publish and enjoy original music around the world.</p>
+    <a href="#" onclick="showSection('tracks')" class="btn">Explore Tracks</a>
+  </div>
+</section>
+
+<!-- TRACKS -->
+<section id="tracks" class="section">
+  <h1 style="text-align:center;margin-bottom:30px;">Tracks & Albums</h1>
+  <div class="tracks">
+    <div class="track-card">
+      <img src="J.jpg" alt="">
+      <div class="track-info"><h3>MUTHTHA MAZHAI(thug life)</h3>
+        <audio controls><source src="m1.mp3" type="audio/mpeg"></audio>
+      </div>
+    </div>
+    <div class="track-card">
+      <img src="c.jpg" alt="">
+      <div class="track-info"><h3>Monica (coolie)</h3>
+        <audio controls><source src="c1.mp3" type="audio/mpeg"></audio>
+      </div>
+    </div>
+    <div class="track-card">
+      <img src="t.jpg" alt="">
+      <div class="track-info"><h3>THEETHIRIYAI (brahmastra)</h3>
+        <audio controls><source src="t1.mp3" type="audio/mpeg"></audio>
+      </div>
+    </div>
+    <div class="track-card">
+      <img src="e.jpg" alt="">
+      <div class="track-info"><h3>ENNODU NEE IRUNTHAL(i)</h3>
+        <audio controls><source src="e.mp3" type="audio/mpeg"></audio>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGIN -->
+<section id="login" class="section">
+  <div class="login-box">
+    <h2 style="text-align:center;margin-bottom:25px;">Login / Sign Up</h2>
+    <input type="email" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <button class="btn-submit">Continue</button>
+    <button class="google-btn">
+      <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="">
+      Login with Google
+    </button>
+  </div>
+</section>
+
+<footer>© 2025 JJ MUZIC HUB. All Rights Reserved.</footer>
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
