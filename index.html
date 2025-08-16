@@ -1,147 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Jafro Music (All in One)</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-    body{background:#121212;color:#f5f5f5;overflow-x:hidden;}
+<meta charset="UTF-8">
+<title>JJ MUZIC HUB</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+body{background:#121212;color:#fff;overflow-x:hidden;}
+/* Layout */
+.app{display:flex;min-height:100vh;flex-direction:column;}
+.sidebar{background:#000;width:240px;padding:20px;position:fixed;top:0;bottom:70px;left:0;}
+.sidebar img{width:70px;height:70px;border-radius:50%;display:block;margin:0 auto 10px;}
+.sidebar h1{font-size:1.1rem;text-align:center;margin-bottom:25px;}
+.sidebar a{display:block;color:#bbb;padding:12px 15px;border-radius:8px;text-decoration:none;margin:4px 0;transition:.3s}
+.sidebar a.active,.sidebar a:hover{background:#1db954;color:#000}
+.main{margin-left:240px;padding:20px;flex:1;}
+.topbar{padding:15px;background:#121212;border-bottom:1px solid #333;position:sticky;top:0;z-index:10;}
+.bottom-player{background:#181818;position:fixed;bottom:0;left:0;right:0;height:70px;display:flex;align-items:center;justify-content:center;border-top:1px solid #333;}
 
-    header{background:#1f1f1f;padding:20px 40px;box-shadow:0 4px 8px rgba(0,0,0,0.5);display:flex;justify-content:space-between;align-items:center;}
-    .tabs{display:flex;gap:15px;}
-    .tabs button{
-      background:#2b2b2b;color:#fff;border:none;
-      padding:10px 20px;border-radius:8px;font-weight:600;
-      cursor:pointer;transition:.3s;
-    }
-    .tabs button.active{background:#ff4f88;}
-    .tabs button:hover:not(.active){background:#444;}
+/* Player */
+.player-inner{display:flex;align-items:center;gap:10px;}
+.play-btn{background:#1db954;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;}
+.play-btn:after{content:'▶';margin-left:3px;color:#000;font-weight:bold;}
+.track-name{font-size:0.95rem;color:#fff}
 
-    .section{display:none;padding:40px;}
-    .section.active{display:block;}
-
-    /*  Home  */
-    .hero{background:url('https://images.unsplash.com/photo-1511379938547-c1f69419868d') center/cover no-repeat;text-align:center;padding:120px 20px;border-radius:12px;}
-    .hero h1{font-size:3rem;margin-bottom:15px;}
-    .btn{display:inline-block;margin-top:20px;padding:14px 35px;background:#ff4f88;color:#fff;border-radius:40px;text-decoration:none;font-weight:600;transition:transform .2s;}
-    .btn:hover{transform:scale(1.05);}
-
-    /* Tracks */
-    .tracks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;max-width:1100px;margin:auto;}
-    .track-card{background:#1e1e1e;border-radius:16px;overflow:hidden;padding-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,0.4);}
-    .track-card img{width:100%;height:180px;object-fit:cover;}
-    .track-info{padding:15px;text-align:center;}
-
-    /* Login */
-    .login-box{background:#1e1e1e;padding:40px;width:90%;max-width:430px;margin:auto;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.5);}
-    .login-box input{width:100%;padding:12px;margin-bottom:15px;border:none;border-radius:8px;background:#2f2f2f;color:#fff;}
-    .login-box .btn-submit{width:100%;background:#ff4f88;border:none;border-radius:8px;padding:14px;font-weight:600;}
-    .google-btn{width:100%;padding:14px;margin-top:8px;background:#ffffff;color:#000;border-radius:8px;font-weight:600;display:flex;justify-content:center;align-items:center;gap:10px;}
-    .google-btn img{width:20px;}
-
-    /* Upload */
-    .upload-form{background:#1e1e1e;padding:40px;max-width:600px;width:90%;margin:auto;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.5);}
-    .upload-form label{display:block;margin-top:15px;margin-bottom:5px;}
-    .upload-form input,.upload-form textarea, .upload-form select{
-      width:100%;padding:12px;border:none;border-radius:8px;background:#2f2f2f;color:#fff;
-    }
-    .upload-form button{margin-top:20px;background:#ff4f88;border:none;color:#fff;padding:14px;width:100%;border-radius:8px;font-weight:600;}
-    
-    footer{text-align:center;padding:25px;background:#1f1f1f;color:#aaa;margin-top:60px;}
-  </style>
+/* Mobile */
+@media(max-width:768px){
+.sidebar{width:70px;padding:10px}
+.sidebar h1{display:none;}
+.sidebar a span{display:none;}
+.sidebar img{width:50px;height:50px;margin-bottom:5px}
+.main{margin-left:70px;}
+}
+</style>
 </head>
 <body>
-
-<header>
-  <h2>🎵 Jafro Music</h2>
-  <div class="tabs">
-    <button class="tab active" onclick="showSection('home')">Home</button>
-    <button class="tab" onclick="showSection('tracks')">Tracks</button>
-    <button class="tab" onclick="showSection('login')">Login / Signup</button>
-    <button class="tab" onclick="showSection('upload')">Upload</button>
+<div class="app">
+  <div class="sidebar">
+    <img src="https://i.imgur.com/Jj6L8ZF.png" alt="logo"> <!-- sample logo -->
+    <h1>JJ MUZIC HUB</h1>
+    <a href="#" class="nav-link active" onclick="openTab('home',this)"><span>Home</span></a>
+    <a href="#" class="nav-link" onclick="openTab('tracks',this)"><span>Tracks</span></a>
+    <a href="#" class="nav-link" onclick="openTab('upload',this)"><span>Upload</span></a>
+    <a href="#" class="nav-link" onclick="openTab('login',this)"><span>Login / Signup</span></a>
+    <a href="#" class="nav-link" onclick="openTab('premium',this)"><span>Premium</span></a>
+    <a href="#" class="nav-link" onclick="openTab('playlist',this)"><span>Your Playlist</span></a>
   </div>
-</header>
 
-<section id="home" class="section active">
-  <div class="hero">
-    <h1>Discover Independent Music</h1>
-    <p>The home for upcoming talented artists — explore, publish and enjoy original music around the world.</p>
-    <a href="#" onclick="showSection('tracks')" class="btn">Explore Tracks</a>
-  </div>
-</section>
+  <div class="main">
+    <div class="topbar"><h2 id="page-title">Home</h2></div>
 
-<section id="tracks" class="section">
-  <h1 style="text-align:center;margin-bottom:30px;">Tracks & Albums</h1>
-  <div class="tracks">
-    <div class="track-card">
-      <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d" alt="">
-      <div class="track-info"><h3>Dreamscape</h3>
-        <audio controls><source src="assets/music/sample1.mp3" type="audio/mpeg"></audio>
-      </div>
+    <!-- Home -->
+    <div id="home" class="tab">
+      <h1>Welcome to JJ MUZIC HUB</h1>
+      <p style="margin-top:10px;">Discover and upload independent music just like Spotify.</p>
     </div>
-    <div class="track-card">
-      <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4" alt="">
-      <div class="track-info"><h3>Moonlight Drive</h3>
-        <audio controls><source src="assets/music/sample2.mp3" type="audio/mpeg"></audio>
-      </div>
+
+    <!-- Tracks -->
+    <div id="tracks" class="tab" style="display:none">
+      <h2>Tracks & Albums</h2>
+      <p>Coming soon — display list/grid of music tracks here.</p>
     </div>
-    <div class="track-card">
-      <img src="https://images.unsplash.com/photo-1505685296765-3a2736de412f" alt="">
-      <div class="track-info"><h3>Echoes</h3>
-        <audio controls><source src="assets/music/sample3.mp3" type="audio/mpeg"></audio>
-      </div>
+
+    <!-- Upload -->
+    <div id="upload" class="tab" style="display:none">
+      <h2>Upload Your Track</h2>
+      <label>Track Title</label><input style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#2c2c2c;color:#fff">
+      <label>Artist Name</label><input style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#2c2c2c;color:#fff">
+      <label>Genre</label>
+      <select style="width:100%;padding:10px;margin:8px 0;border-radius:8px;background:#2c2c2c;color:#fff">
+        <option>Pop</option><option>Hip-Hop</option><option>Electronic</option><option>Classical</option>
+      </select>
+      <label>Cover Image</label><input type="file" style="margin:8px 0;color:#fff">
+      <label>Track File (MP3)</label><input type="file" style="margin:8px 0;color:#fff">
+      <button onclick="alert('Track uploaded successfully!')" style="margin-top:12px;background:#1db954;border:none;padding:12px;border-radius:8px;font-weight:600;color:#000;width:100%">Upload</button>
+    </div>
+
+    <!-- Login -->
+    <div id="login" class="tab" style="display:none">
+      <h2>Login / Signup</h2>
+      <label>Email</label><input style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#2c2c2c;color:#fff">
+      <label>Password</label><input type="password" style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#2c2c2c;color:#fff">
+      <button style="margin-top:10px;width:100%;padding:12px;border:none;border-radius:8px;background:#1db954;color:#000;font-weight:600">Continue</button>
+    </div>
+
+    <!-- Premium -->
+    <div id="premium" class="tab" style="display:none">
+      <h2>Go Premium</h2>
+      <p>Get ad-free music & exclusive features. Coming soon!</p>
+    </div>
+
+    <!-- Playlist -->
+    <div id="playlist" class="tab" style="display:none">
+      <h2>Your Playlist</h2>
+      <p>No songs saved yet. Start listening and add to your playlist!</p>
     </div>
   </div>
-</section>
 
-<section id="login" class="section">
-  <div class="login-box">
-    <h2 style="text-align:center;margin-bottom:25px;">Login / Sign Up</h2>
-    <input type="email" placeholder="Email">
-    <input type="password" placeholder="Password">
-    <button class="btn-submit">Continue</button>
-    <button class="google-btn">
-      <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="">
-      Login with Google
-    </button>
+  <!-- Bottom player -->
+  <div class="bottom-player">
+    <div class="player-inner">
+      <button class="play-btn"></button>
+      <div class="track-name">Dreamscape - Demo</div>
+    </div>
   </div>
-</section>
-
-<section id="upload" class="section">
-  <div class="upload-form">
-    <h2 style="text-align:center;margin-bottom:20px;">Upload Your Music</h2>
-    <label>Track Title</label>
-    <input type="text" placeholder="Track Title">
-    <label>Artist Name</label>
-    <input type="text" placeholder="Artist Name">
-    <label>Genre</label>
-    <select>
-      <option>Pop</option>
-      <option>Rock</option>
-      <option>Hip Hop</option>
-      <option>Electronic</option>
-      <option>Classical</option>
-      <option>Other</option>
-    </select>
-    <label>Description</label>
-    <textarea rows="4" placeholder="Describe your track..."></textarea>
-    <label>Cover Image</label>
-    <input type="file">
-    <label>Music File (MP3)</label>
-    <input type="file">
-    <button onclick="alert('Track uploaded successfully!')">Upload Track</button>
-  </div>
-</section>
-
-<footer>© 2025 Jafro Music. All Rights Reserved.</footer>
+</div>
 
 <script>
-  function showSection(id) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    event.target.classList.add('active');
-  }
+function openTab(id,el){
+  document.querySelectorAll('.tab').forEach(s=>s.style.display='none');
+  document.getElementById(id).style.display='block';
+  document.getElementById('page-title').innerText=el.innerText;
+  document.querySelectorAll('.nav-link').forEach(a=>a.classList.remove('active'));
+  el.classList.add('active');
+}
 </script>
 </body>
 </html>
