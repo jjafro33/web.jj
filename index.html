@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>JJ MUZIC HUB</title>
+  <title>Jafro Music (All in One)</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-    body{background:#121212;color:#b88787;overflow-x:hidden;}
+    body{background:#121212;color:#f5f5f5;overflow-x:hidden;}
 
     header{background:#1f1f1f;padding:20px 40px;box-shadow:0 4px 8px rgba(0,0,0,0.5);display:flex;justify-content:space-between;align-items:center;}
-    .tabs{display:flex;gap:20px;}
+    .tabs{display:flex;gap:15px;}
     .tabs button{
       background:#2b2b2b;color:#fff;border:none;
       padding:10px 20px;border-radius:8px;font-weight:600;
@@ -27,35 +27,41 @@
     .btn:hover{transform:scale(1.05);}
 
     /* Tracks */
-    .tracks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;max-width:1100px;margin: auto;}
-    .track-card{background:#1e1e1e;border-radius:16px;overflow:hidden;padding-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,0.4);transition:transform .2s;}
-    .track-card:hover{transform:translateY(-5px);}
+    .tracks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;max-width:1100px;margin:auto;}
+    .track-card{background:#1e1e1e;border-radius:16px;overflow:hidden;padding-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,0.4);}
     .track-card img{width:100%;height:180px;object-fit:cover;}
     .track-info{padding:15px;text-align:center;}
-    .track-info h3{margin-bottom:10px;}
 
     /* Login */
     .login-box{background:#1e1e1e;padding:40px;width:90%;max-width:430px;margin:auto;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.5);}
     .login-box input{width:100%;padding:12px;margin-bottom:15px;border:none;border-radius:8px;background:#2f2f2f;color:#fff;}
-    .login-box .btn-submit{width:100%;background:#ff4f88;border:none;border-radius:8px;padding:14px;font-weight:600;margin-top:5px;}
+    .login-box .btn-submit{width:100%;background:#ff4f88;border:none;border-radius:8px;padding:14px;font-weight:600;}
     .google-btn{width:100%;padding:14px;margin-top:8px;background:#ffffff;color:#000;border-radius:8px;font-weight:600;display:flex;justify-content:center;align-items:center;gap:10px;}
     .google-btn img{width:20px;}
 
+    /* Upload */
+    .upload-form{background:#1e1e1e;padding:40px;max-width:600px;width:90%;margin:auto;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.5);}
+    .upload-form label{display:block;margin-top:15px;margin-bottom:5px;}
+    .upload-form input,.upload-form textarea, .upload-form select{
+      width:100%;padding:12px;border:none;border-radius:8px;background:#2f2f2f;color:#fff;
+    }
+    .upload-form button{margin-top:20px;background:#ff4f88;border:none;color:#fff;padding:14px;width:100%;border-radius:8px;font-weight:600;}
+    
     footer{text-align:center;padding:25px;background:#1f1f1f;color:#aaa;margin-top:60px;}
   </style>
 </head>
 <body>
 
 <header>
-  <h2>JJ MUZIC HUB</h2>
+  <h2>🎵 Jafro Music</h2>
   <div class="tabs">
     <button class="tab active" onclick="showSection('home')">Home</button>
     <button class="tab" onclick="showSection('tracks')">Tracks</button>
     <button class="tab" onclick="showSection('login')">Login / Signup</button>
+    <button class="tab" onclick="showSection('upload')">Upload</button>
   </div>
 </header>
 
-<!-- HOME -->
 <section id="home" class="section active">
   <div class="hero">
     <h1>Discover Independent Music</h1>
@@ -64,38 +70,30 @@
   </div>
 </section>
 
-<!-- TRACKS -->
 <section id="tracks" class="section">
   <h1 style="text-align:center;margin-bottom:30px;">Tracks & Albums</h1>
   <div class="tracks">
     <div class="track-card">
-      <img src="J.jpg" alt="">
-      <div class="track-info"><h3>MUTHTHA MAZHAI(thug life)</h3>
-        <audio controls><source src="m1.mp3" type="audio/mpeg"></audio>
+      <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d" alt="">
+      <div class="track-info"><h3>Dreamscape</h3>
+        <audio controls><source src="assets/music/sample1.mp3" type="audio/mpeg"></audio>
       </div>
     </div>
     <div class="track-card">
-      <img src="c.jpg" alt="">
-      <div class="track-info"><h3>Monica (coolie)</h3>
-        <audio controls><source src="c1.mp3" type="audio/mpeg"></audio>
+      <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4" alt="">
+      <div class="track-info"><h3>Moonlight Drive</h3>
+        <audio controls><source src="assets/music/sample2.mp3" type="audio/mpeg"></audio>
       </div>
     </div>
     <div class="track-card">
-      <img src="t.jpg" alt="">
-      <div class="track-info"><h3>THEETHIRIYAI (brahmastra)</h3>
-        <audio controls><source src="t1.mp3" type="audio/mpeg"></audio>
-      </div>
-    </div>
-    <div class="track-card">
-      <img src="e.jpg" alt="">
-      <div class="track-info"><h3>ENNODU NEE IRUNTHAL(i)</h3>
-        <audio controls><source src="e.mp3" type="audio/mpeg"></audio>
+      <img src="https://images.unsplash.com/photo-1505685296765-3a2736de412f" alt="">
+      <div class="track-info"><h3>Echoes</h3>
+        <audio controls><source src="assets/music/sample3.mp3" type="audio/mpeg"></audio>
       </div>
     </div>
   </div>
 </section>
 
-<!-- LOGIN -->
 <section id="login" class="section">
   <div class="login-box">
     <h2 style="text-align:center;margin-bottom:25px;">Login / Sign Up</h2>
@@ -109,7 +107,33 @@
   </div>
 </section>
 
-<footer>© 2025 JJ MUZIC HUB. All Rights Reserved.</footer>
+<section id="upload" class="section">
+  <div class="upload-form">
+    <h2 style="text-align:center;margin-bottom:20px;">Upload Your Music</h2>
+    <label>Track Title</label>
+    <input type="text" placeholder="Track Title">
+    <label>Artist Name</label>
+    <input type="text" placeholder="Artist Name">
+    <label>Genre</label>
+    <select>
+      <option>Pop</option>
+      <option>Rock</option>
+      <option>Hip Hop</option>
+      <option>Electronic</option>
+      <option>Classical</option>
+      <option>Other</option>
+    </select>
+    <label>Description</label>
+    <textarea rows="4" placeholder="Describe your track..."></textarea>
+    <label>Cover Image</label>
+    <input type="file">
+    <label>Music File (MP3)</label>
+    <input type="file">
+    <button onclick="alert('Track uploaded successfully!')">Upload Track</button>
+  </div>
+</section>
+
+<footer>© 2025 Jafro Music. All Rights Reserved.</footer>
 
 <script>
   function showSection(id) {
@@ -119,6 +143,5 @@
     event.target.classList.add('active');
   }
 </script>
-
 </body>
 </html>
