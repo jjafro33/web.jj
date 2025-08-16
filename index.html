@@ -2,147 +2,277 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>JJ MUZIC HUB</title>
+<title>JJ MUZIC HUB - Spotify Demo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-body{background:#121212;color:#fff;overflow-x:hidden;}
-/* Layout */
-.app{display:flex;min-height:100vh;flex-direction:column;}
-.sidebar{background:#000;width:240px;padding:20px;position:fixed;top:0;bottom:70px;left:0;}
+body{background:#121212;color:#fff;}
+.app{display:flex;flex-direction:column;min-height:100vh;}
+.sidebar{background:#000;width:240px;padding:20px;position:fixed;top:0;bottom:90px;left:0;overflow-y:auto;}
 .sidebar img{width:70px;height:70px;border-radius:50%;display:block;margin:0 auto 10px;}
 .sidebar h1{font-size:1.1rem;text-align:center;margin-bottom:25px;}
 .sidebar a{display:block;color:#bbb;padding:12px 15px;border-radius:8px;text-decoration:none;margin:4px 0;transition:.3s}
 .sidebar a.active,.sidebar a:hover{background:#1db954;color:#000}
 .main{margin-left:240px;padding:20px;flex:1;}
-.topbar{padding:15px;background:#121212;border-bottom:1px solid #333;position:sticky;top:0;z-index:10;}
-.bottom-player{background:#181818;position:fixed;bottom:0;left:0;right:0;height:70px;display:flex;align-items:center;justify-content:center;border-top:1px solid #333;}
-/* Tracks */
-    .tracks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;max-width:1100px;margin: auto;}
-    .track-card{background:#1e1e1e;border-radius:16px;overflow:hidden;padding-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,0.4);transition:transform .2s;}
-    .track-card:hover{transform:translateY(-5px);}
-    .track-card img{width:100%;height:180px;object-fit:cover;}
-    .track-info{padding:15px;text-align:center;}
-    .track-info h3{margin-bottom:10px;}
-
-/* Player */
-.player-inner{display:flex;align-items:center;gap:10px;}
-.play-btn{background:#1db954;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;}
-.play-btn:after{content:'▶';margin-left:3px;color:#000;font-weight:bold;}
-.track-name{font-size:0.95rem;color:#fff}
-
-/* Mobile */
+.topbar{padding:10px 20px;background:#121212;border-bottom:1px solid #333;position:sticky;top:0;display:flex;justify-content:center;align-items:center;gap:10px;z-index:10;}
+.topbar input{width:50%;padding:8px;border-radius:20px;border:none;background:#2c2c2c;color:#fff;text-align:center;}
+.tab{display:none;}
+.tab.active{display:block;}
+h1,h2{margin-bottom:15px;}
+.tracks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;}
+.track-card{background:#1e1e1e;padding:15px;border-radius:12px;position:relative;transition:0.2s;}
+.track-card:hover{transform:translateY(-5px);}
+.track-card img{width:100%;border-radius:8px;}
+.track-info{margin-top:10px;text-align:center;}
+.track-info h3{font-size:1rem;margin-bottom:5px;cursor:pointer;color:#1db954;}
+.track-info p{font-size:0.85rem;color:#bbb;margin-bottom:10px;}
+.track-buttons{display:flex;justify-content:center;gap:10px;}
+.track-buttons button{border:none;padding:6px 10px;border-radius:8px;cursor:pointer;transition:.2s;}
+.track-buttons button:hover{transform:scale(1.1);}
+.play-btn-track{background:#1db954;color:#000;font-weight:bold;}
+.like-btn{background:#ff4f88;color:#fff;}
+.menu-btn{background:#444;color:#fff;}
+.bottom-player{background:#181818;position:fixed;bottom:0;left:0;right:0;height:90px;display:flex;align-items:center;gap:15px;padding:10px 20px;border-top:1px solid #333;}
+.player-album{width:60px;height:60px;border-radius:8px;}
+.player-info{flex:1;display:flex;flex-direction:column;justify-content:center;}
+.player-info .song-name{font-weight:600;}
+.player-info .artist-name{font-size:0.85rem;color:#bbb;margin-top:2px;}
+.player-controls{display:flex;align-items:center;gap:10px;margin-top:5px;}
+.player-controls button{width:35px;height:35px;border-radius:50%;border:none;background:#1db954;color:#000;cursor:pointer;font-weight:bold;}
+.progress-bar{width:100%;height:6px;background:#2c2c2c;border-radius:3px;margin-top:5px;position:relative;}
+.progress{height:100%;background:#1db954;width:0%;border-radius:3px;}
+.artist-section{margin-top:20px;}
+.artist-section img{width:150px;height:150px;border-radius:50%;display:block;margin:0 auto 10px;}
+.artist-section h2{text-align:center;margin-bottom:5px;}
+.artist-section p{text-align:center;margin-bottom:15px;color:#bbb;}
+.input-full{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#2c2c2c;color:#fff}
+.upload-btn{margin-top:12px;background:#1db954;border:none;padding:12px;border-radius:8px;font-weight:600;color:#000;width:100%}
 @media(max-width:768px){
-.sidebar{width:70px;padding:10px}
+.sidebar{width:70px;padding:10px;}
 .sidebar h1{display:none;}
-.sidebar a span{display:none;}
-.sidebar img{width:50px;height:50px;margin-bottom:5px}
+.sidebar a{text-align:center;padding:10px;}
 .main{margin-left:70px;}
+.topbar input{width:60%;}
 }
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="sidebar">
-    <img src="jmh.jpg" alt="logo"> <!-- sample logo -->
-    <h1>JJ MUZIC HUB</h1>
-    <a href="#" class="nav-link active" onclick="openTab('home',this)"><span>Home</span></a>
-    <a href="#" class="nav-link" onclick="openTab('tracks',this)"><span>Tracks</span></a>
-    <a href="#" class="nav-link" onclick="openTab('upload',this)"><span>Upload</span></a>
-    <a href="#" class="nav-link" onclick="openTab('login',this)"><span>Login / Signup</span></a>
-    <a href="#" class="nav-link" onclick="openTab('premium',this)"><span>Premium</span></a>
-    <a href="#" class="nav-link" onclick="openTab('playlist',this)"><span>Your Playlist</span></a>
-  </div>
+<div class="sidebar">
+<img src="https://i.imgur.com/Jj6L8ZF.png" alt="logo">
+<h1>JJ MUZIC HUB</h1>
+<a href="#" class="nav-link active" onclick="openTab('home',this)">Home</a>
+<a href="#" class="nav-link" onclick="openTab('tracks',this)">Tracks</a>
+<a href="#" class="nav-link" onclick="openTab('upload',this)">Upload</a>
+<a href="#" class="nav-link" onclick="openTab('login',this)">Login / Signup</a>
+<a href="#" class="nav-link" onclick="openTab('premium',this)">Premium</a>
+<a href="#" class="nav-link" onclick="openTab('playlist',this)">Your Playlist</a>
+</div>
 
-  <div class="main">
-    <div class="topbar"><h2 id="page-title">Home</h2></div>
+<div class="main">
+<div class="topbar">
+<input type="text" placeholder="Search for tracks or artists">
+</div>
 
-    <!-- Home -->
-    <div id="home" class="tab">
-      <h1>Welcome to JJ MUZIC HUB</h1>
-      <p style="margin-top:10px;">Discover and upload independent music just like Spotify.</p>
-    </div>
+<div id="home" class="tab active">
+<h1>Welcome to JJ MUZIC HUB</h1>
+<p>Discover and play independent music like Spotify.</p>
+</div>
 
-    <!-- Tracks -->
-    <div id="tracks" class="tab" style="display:none">
-      <section id="tracks" class="section">
-  <h1 style="text-align:center;margin-bottom:30px;">Tracks & Albums</h1>
-  <div class="tracks">
-    <div class="track-card">
-      <img src="e.jpg" alt="">
-      <div class="track-info"><h3>ENNODU NEE IRUNTHAL(I)</h3>
-        <audio controls><source src="e.mp3" type="audio/mpeg"></audio>
-      </div>
-    </div>
-    <div class="track-card">
-      <img src="c.jpg" alt="">
-      <div class="track-info"><h3>Monica(coolie)</h3>
-        <audio controls><source src="c1.mp3" type="audio/mpeg"></audio>
-      </div>
-    </div>
-    <div class="track-card">
-      <img src="t.jpg" alt="">
-      <div class="track-info"><h3>THEETHIRIYA(brahmastara)</h3>
-        <audio controls><source src="t1.mp3" type="audio/mpeg"></audio>
-      </div>
-    </div>
-  </div>
-</section>
-      <h2>Tracks & Albums</h2>
-      <p>Coming soon — display list/grid of music tracks here.</p>
-    </div>
+<div id="tracks" class="tab">
+<h2>Tracks & Albums</h2>
+<div class="tracks-grid">
 
-    <!-- Upload -->
-    <div id="upload" class="tab" style="display:none">
-      <h2>Upload Your Track</h2>
-      <label>Track Title</label><input style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#2c2c2c;color:#fff">
-      <label>Artist Name</label><input style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#2c2c2c;color:#fff">
-      <label>Genre</label>
-      <select style="width:100%;padding:10px;margin:8px 0;border-radius:8px;background:#2c2c2c;color:#fff">
-        <option>Pop</option><option>Hip-Hop</option><option>Electronic</option><option>Classical</option>
-      </select>
-      <label>Cover Image</label><input type="file" style="margin:8px 0;color:#fff">
-      <label>Track File (MP3)</label><input type="file" style="margin:8px 0;color:#fff">
-      <button onclick="alert('Track uploaded successfully!')" style="margin-top:12px;background:#1db954;border:none;padding:12px;border-radius:8px;font-weight:600;color:#000;width:100%">Upload</button>
-    </div>
+<!-- Sid Sriram Tracks -->
+<div class="track-card">
+<img src="https://i.imgur.com/0rE5X0Z.jpg" alt="Track Cover">
+<div class="track-info">
+<h3 onclick="openArtist('sidsriram')">Sid Sriram</h3>
+<p>Dreamscape</p>
+<div class="track-buttons">
+<button class="play-btn-track" onclick="playTrack('Dreamscape','Sid Sriram','https://i.imgur.com/0rE5X0Z.jpg','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">Play</button>
+<button class="like-btn">❤</button>
+<button class="menu-btn">⋮</button>
+</div>
+</div>
+</div>
 
-    <!-- Login -->
-    <div id="login" class="tab" style="display:none">
-      <h2>Login / Signup</h2>
-      <label>Email</label><input style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#2c2c2c;color:#fff">
-      <label>Password</label><input type="password" style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#2c2c2c;color:#fff">
-      <button style="margin-top:10px;width:100%;padding:12px;border:none;border-radius:8px;background:#1db954;color:#000;font-weight:600">Continue</button>
-    </div>
+<div class="track-card">
+<img src="https://i.imgur.com/0rE5X0Z.jpg" alt="Track Cover">
+<div class="track-info">
+<h3 onclick="openArtist('sidsriram')">Sid Sriram</h3>
+<p>Melody Sky</p>
+<div class="track-buttons">
+<button class="play-btn-track" onclick="playTrack('Melody Sky','Sid Sriram','https://i.imgur.com/0rE5X0Z.jpg','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">Play</button>
+<button class="like-btn">❤</button>
+<button class="menu-btn">⋮</button>
+</div>
+</div>
+</div>
 
-    <!-- Premium -->
-    <div id="premium" class="tab" style="display:none">
-      <h2>Go Premium</h2>
-      <p>Get ad-free music & exclusive features. Coming soon!</p>
-    </div>
+<!-- Anirudh Tracks -->
+<div class="track-card">
+<img src="https://i.imgur.com/2H7MzfC.jpg" alt="Track Cover">
+<div class="track-info">
+<h3 onclick="openArtist('anirudh')">Anirudh</h3>
+<p>Rhythm Beat</p>
+<div class="track-buttons">
+<button class="play-btn-track" onclick="playTrack('Rhythm Beat','Anirudh','https://i.imgur.com/2H7MzfC.jpg','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">Play</button>
+<button class="like-btn">❤</button>
+<button class="menu-btn">⋮</button>
+</div>
+</div>
+</div>
 
-    <!-- Playlist -->
-    <div id="playlist" class="tab" style="display:none">
-      <h2>Your Playlist</h2>
-      <p>No songs saved yet. Start listening and add to your playlist!</p>
-    </div>
-  </div>
+<div class="track-card">
+<img src="https://i.imgur.com/2H7MzfC.jpg" alt="Track Cover">
+<div class="track-info">
+<h3 onclick="openArtist('anirudh')">Anirudh</h3>
+<p>Groove Line</p>
+<div class="track-buttons">
+<button class="play-btn-track" onclick="playTrack('Groove Line','Anirudh','https://i.imgur.com/2H7MzfC.jpg','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3')">Play</button>
+<button class="like-btn">❤</button>
+<button class="menu-btn">⋮</button>
+</div>
+</div>
+</div>
 
-  <!-- Bottom player -->
-  <div class="bottom-player">
-    <div class="player-inner">
-      <button class="play-btn"></button>
-      <div class="track-name">Dreamscape - Demo</div>
-    </div>
-  </div>
+</div>
+</div>
+
+<div id="upload" class="tab">
+<h2>Upload Your Track</h2>
+<label>Track Title</label><input class="input-full">
+<label>Artist Name</label><input class="input-full">
+<label>Genre</label>
+<select class="input-full">
+<option>Pop</option><option>Hip-Hop</option><option>Electronic</option><option>Classical</option>
+</select>
+<label>Cover Image</label><input type="file" class="input-full">
+<label>Track File (MP3)</label><input type="file" class="input-full">
+<button onclick="alert('Track uploaded successfully!')" class="upload-btn">Upload</button>
+</div>
+
+<div id="login" class="tab">
+<h2>Login / Signup</h2>
+<input placeholder="Email" class="input-full">
+<input placeholder="Password" class="input-full" type="password">
+<button class="upload-btn">Continue</button>
+</div>
+
+<div id="premium" class="tab">
+<h2>Go Premium</h2>
+<p>Get ad-free music & exclusive features. Coming soon!</p>
+</div>
+
+<div id="playlist" class="tab">
+<h2>Your Playlist</h2>
+<p>No songs saved yet. Start listening and add to your playlist!</p>
+</div>
+
+<!-- ARTISTS -->
+<div id="sidsriram" class="tab artist-section">
+<img src="https://i.imgur.com/0rE5X0Z.jpg" alt="Sid Sriram">
+<h2>Sid Sriram</h2>
+<p>Popular playback singer and composer in India.</p>
+<div class="tracks-grid">
+<div class="track-card">
+<img src="https://i.imgur.com/0rE5X0Z.jpg" alt="Track Cover">
+<div class="track-info">
+<p>Dreamscape</p>
+<div class="track-buttons">
+<button class="play-btn-track" onclick="playTrack('Dreamscape','Sid Sriram','https://i.imgur.com/0rE5X0Z.jpg','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">Play</button>
+</div>
+</div>
+</div>
+<div class="track-card">
+<img src="https://i.imgur.com/0rE5X0Z.jpg" alt="Track Cover">
+<div class="track-info">
+<p>Melody Sky</p>
+<div class="track-buttons">
+<button class="play-btn-track" onclick="playTrack('Melody Sky','Sid Sriram','https://i.imgur.com/0rE5X0Z.jpg','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">Play</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="anirudh" class="tab artist-section">
+<img src="https://i.imgur.com/2H7MzfC.jpg" alt="Anirudh">
+<h2>Anirudh</h2>
+<p>Indian music composer, singer, and performer.</p>
+<div class="tracks-grid">
+<div class="track-card">
+<img src="https://i.imgur.com/2H7MzfC.jpg" alt="Track Cover">
+<div class="track-info">
+<p>Rhythm Beat</p>
+<div class="track-buttons">
+<button class="play-btn-track" onclick="playTrack('Rhythm Beat','Anirudh','https://i.imgur.com/2H7MzfC.jpg','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">Play</button>
+</div>
+</div>
+</div>
+<div class="track-card">
+<img src="https://i.imgur.com/2H7MzfC.jpg" alt="Track Cover">
+<div class="track-info">
+<p>Groove Line</p>
+<div class="track-buttons">
+<button class="play-btn-track" onclick="playTrack('Groove Line','Anirudh','https://i.imgur.com/2H7MzfC.jpg','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3')">Play</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="bottom-player">
+<img class="player-album" id="nowAlbum" src="https://i.imgur.com/0rE5X0Z.jpg" alt="Album">
+<div class="player-info">
+<div class="song-name" id="nowSong">Dreamscape</div>
+<div class="artist-name" id="nowArtist">Sid Sriram</div>
+<div class="progress-bar"><div class="progress" id="progressBar"></div></div>
+<div class="player-controls">
+<button id="playPauseBtn">▶</button>
+</div>
+</div>
+</div>
+
+<audio id="audioPlayer" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
 </div>
 
 <script>
+let currentAudio = document.getElementById('audioPlayer');
+let progressBar = document.getElementById('progressBar');
+let playBtn = document.getElementById('playPauseBtn');
+
 function openTab(id,el){
-  document.querySelectorAll('.tab').forEach(s=>s.style.display='none');
-  document.getElementById(id).style.display='block';
-  document.getElementById('page-title').innerText=el.innerText;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
   document.querySelectorAll('.nav-link').forEach(a=>a.classList.remove('active'));
-  el.classList.add('active');
+  if(el) el.classList.add('active');
+}
+function openArtist(id){ openTab(id); }
+
+function playTrack(song,artist,img,url){
+  document.getElementById('nowSong').innerText = song;
+  document.getElementById('nowArtist').innerText = artist;
+  document.getElementById('nowAlbum').src = img;
+  currentAudio.src = url;
+  currentAudio.play();
+  playBtn.innerText = '❚❚';
+}
+
+// Play/pause button
+playBtn.onclick = function(){
+  if(currentAudio.paused){currentAudio.play();playBtn.innerText='❚❚';}
+  else{currentAudio.pause();playBtn.innerText='▶';}
+}
+
+// Update progress bar
+currentAudio.ontimeupdate = function(){
+  let percent = (currentAudio.currentTime/currentAudio.duration)*100;
+  progressBar.style.width = percent+'%';
 }
 </script>
 </body>
