@@ -2,270 +2,357 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>JJ MUZIC HUB</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/jpg" href="jmh.jpg">
-  <!-- Styles -->
+  <title>Spotify Clone</title>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-    body{background:#121212;color:#fff;overflow-x:hidden;}
-    a{text-decoration:none;color:#fff;}
-    a:hover{color:#1db954;}
-    /* Sidebar */
-    .sidebar{background:#000;width:220px;position:fixed;top:0;bottom:90px;padding:20px;overflow-y:auto;}
-    .sidebar img{width:70px;height:70px;margin:0 auto 15px;border-radius:50%;}
-    .sidebar h1{text-align:center;margin-bottom:20px;font-size:1.2rem;}
-    .sidebar a{display:block;padding:12px;border-radius:6px;margin:6px 0;}
-    .sidebar a.active,.sidebar a:hover{background:#1db954;color:#000;}
-    /* Main */
-    .main{margin-left:220px;padding:20px;}
-    .topbar{padding:12px;background:#121212;position:sticky;top:0;z-index:10;display:flex;justify-content:center;}
-    .topbar input{width:60%;padding:8px 15px;border-radius:20px;border:none;background:#2b2b2b;color:#fff;text-align:center;}
-    .tab{display:none;} .tab.active{display:block;}
-    h1,h2{margin-bottom:15px;}
-    /* Card Grid */
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;}
-    .card{background:#1e1e1e;border-radius:12px;padding:12px;transition:.3s;cursor:pointer;}
-    .card:hover{transform:translateY(-4px);}
-    .card img{width:100%;height:170px;object-fit:cover;border-radius:8px;}
-    .card-title{margin-top:8px;font-weight:600;}
-    .card-artist{font-size:0.85rem;color:#bbb;margin-bottom:8px;}
-    /* Carousel */
-    .carousel{display:flex;overflow-x:auto;gap:15px;padding:10px;scrollbar-width:none;}
-    .carousel::-webkit-scrollbar{display:none;}
-    /* Bottom Player */
-    .bottom-player{background:#181818;position:fixed;bottom:0;left:0;right:0;height:100px;border-top:1px solid #333;padding:10px;display:flex;align-items:center;gap:15px;}
-    .player-cover{width:60px;height:60px;border-radius:8px;}
-    .player-info{flex:1;}
-    .player-title{font-weight:600;}
-    .player-artist{font-size:0.85rem;color:#bbb;}
-    .controls{display:flex;align-items:center;gap:10px;margin-top:5px;}
-    .controls button{width:35px;height:35px;border:none;border-radius:50%;background:#1db954;color:#000;font-weight:bold;cursor:pointer;}
-    .progress-bar{height:6px;background:#2c2c2c;border-radius:3px;overflow:hidden;margin-top:5px;}
-    .progress{height:100%;background:#1db954;width:0%;}
-    .volume-slider{width:80px;}
-    /* Upload */
-    .input-full{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;background:#2c2c2c;color:#fff;}
-    /* Responsive */
-    @media(max-width:768px){
-      .sidebar{width:70px;padding:10px;}
-      .sidebar h1{display:none;}
-      .sidebar a{text-align:center;padding:10px;}
-      .main{margin-left:70px;}
-      .topbar input{width:80%;}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      background: #181818;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #1DB954;
+    }
+    .main {
+      flex: 1;
+      display: flex;
+    }
+    .sidebar {
+      width: 200px;
+      background: #000;
+      padding: 20px;
+    }
+    .sidebar h2 {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: #ccc;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar li {
+      padding: 8px 0;
+      cursor: pointer;
+      color: #aaa;
+    }
+    .sidebar li:hover {
+      color: #fff;
+    }
+    .content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .track {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    .track img {
+      width: 50px;
+      height: 50px;
+      margin-right: 15px;
+      border-radius: 4px;
+    }
+    .track-info {
+      font-size: 0.9rem;
+    }
+    .track-info h4 {
+      margin: 0;
+      color: #fff;
+    }
+    .track-info p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: #bbb;
+    }
+    .player {
+      background: #181818;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .player-left {
+      display: flex;
+      align-items: center;
+    }
+    .player-left img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+      border-radius: 4px;
+    }
+    .player-info h4, .player-info p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+    .player-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .btn.special {
+      font-size: 1.5rem;
+      color: #1DB954;
+    }
+    .progress-container {
+      flex: 1;
+      margin: 0 20px;
+      height: 5px;
+      background: #333;
+      border-radius: 5px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .progress {
+      height: 100%;
+      width: 0;
+      background: #1DB954;
+    }
+    .volume-container {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      width: 150px;
+    }
+    .volume-slider {
+      width: 100px;
     }
   </style>
 </head>
 <body>
-
-<!-- LEFT SIDEBAR -->
-<div class="sidebar">
-  <img src="jmh.jpg" alt="logo">
-  <h1>JJ MUZIC HUB</h1>
-  <a href="#" class="nav-link active" onclick="openTab('home',this)">Home</a>
-  <a href="#" class="nav-link" onclick="openTab('tracks',this)">Tracks</a>
-  <a href="#" class="nav-link" onclick="openTab('playlist',this)">Top Trending Tamil Hits</a>
-  <a href="#" class="nav-link" onclick="openTab('artists',this)">Artists</a>
-  <a href="#" class="nav-link" onclick="openTab('upload',this)">Upload</a>
-</div>
-
-<div class="main">
-  <div class="topbar">
-    <input type="text" id="searchBar" placeholder="Search for songs or artists..." onkeyup="liveSearch(this.value)">
-  </div>
-
-  <!-- HOME TAB -->
-  <div id="home" class="tab active">
-    <h1>Welcome To JJ MUZIC HUB</h1>
-    <h2>Featured</h2>
-    <div class="carousel" id="featuredCarousel"></div>
-
-    <h2>Mini Queue</h2>
-    <div id="miniQueue" style="background:#1e1e1e;padding:10px;border-radius:8px;max-height:120px;overflow-y:auto;"></div>
-  </div>
-
-  <!-- TRACKS TAB -->
-  <div id="tracks" class="tab">
-    <h1>All Tracks</h1>
-    <div id="tracksGrid" class="grid"></div>
-  </div>
-
-  <!-- PLAYLIST TAB -->
-  <div id="playlist" class="tab">
-    <h1>Top Trending Tamil Hits</h1>
-    <div id="playlistGrid" class="grid"></div>
-  </div>
-
-  <!-- ARTISTS TAB -->
-  <div id="artists" class="tab">
-    <h1>Artists</h1>
-    <div class="grid" id="artistGrid"></div>
-  </div>
-
-  <!-- UPLOAD TAB -->
-  <div id="upload" class="tab">
-    <h1>Upload Track</h1>
-    <input placeholder="Title" class="input-full"><input placeholder="Artist" class="input-full">
-    <button onclick="alert('Upload complete!')" class="input-full" style="background:#1db954;">Upload</button>
-  </div>
-</div>
-
-<!-- BOTTOM PLAYER -->
-<div class="bottom-player" id="bottomPlayer">
-  <img id="nowCover" class="player-cover" src="https://i.imgur.com/0rE5X0Z.jpg">
-  <div class="player-info">
-    <div class="player-title" id="nowTitle">--</div>
-    <div class="player-artist" id="nowArtist">--</div>
-    <div class="progress-bar"><div id="progress" class="progress"></div></div>
-    <div class="controls">
-      <button onclick="prevTrack()">⏮</button>
-      <button id="playBtn">▶</button>
-      <button onclick="nextTrack()">⏭</button>
-      <button onclick="toggleShuffle()">🔀</button>
-      <button onclick="toggleRepeat()">🔁</button>
-      <input type="range" min="0" max="1" step="0.01" value="1" id="volumeSlider" class="volume-slider">
+  <header>Spotify Clone</header>
+  <div class="main">
+    <div class="sidebar">
+      <h2>Menu</h2>
+      <ul>
+        <li>Home</li>
+        <li>Search</li>
+        <li>Your Library</li>
+      </ul>
+    </div>
+    <div class="content">
+      <h2>Playlist</h2>
+      <div class="track" data-src="song1.mp3" data-title="Song One" data-artist="Artist A" data-img="https://via.placeholder.com/50">
+        <img src="https://via.placeholder.com/50" alt="Album Art">
+        <div class="track-info">
+          <h4>Song One</h4>
+          <p>Artist A</p>
+        </div>
+      </div>
+      <div class="track" data-src="song2.mp3" data-title="Song Two" data-artist="Artist B" data-img="https://via.placeholder.com/50">
+        <img src="https://via.placeholder.com/50" alt="Album Art">
+        <div class="track-info">
+          <h4>Song Two</h4>
+          <p>Artist B</p>
+        </div>
+      </div>
+      <div class="track" data-src="song3.mp3" data-title="Song Three" data-artist="Artist C" data-img="https://via.placeholder.com/50">
+        <img src="https://via.placeholder.com/50" alt="Album Art">
+        <div class="track-info">
+          <h4>Song Three</h4>
+          <p>Artist C</p>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+  <div class="player">
+    <div class="player-left">
+      <img id="player-img" src="https://via.placeholder.com/50" alt="Album Art">
+      <div class="player-info">
+        <h4 id="player-title">Song Title</h4>
+        <p id="player-artist">Artist</p>
+      </div>
+    </div>
+    <div class="player-controls">
+      <button id="shuffleBtn" class="btn">🔀</button>
+      <button id="prev" class="btn">⏮</button>
+      <button id="play" class="btn special">▶</button>
+      <button id="next" class="btn">⏭</button>
+      <button id="repeatBtn" class="btn">🔁</button>
+    </div>
+    <div class="progress-container" id="progress-container">
+      <div class="progress" id="progress-bar"></div>
+    </div>
+    <div class="volume-container">
+      <button id="muteBtn" class="btn">🔊</button>
+      <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="1">
+    </div>
+    <audio id="audio"></audio>
+  </div>
 
-<audio id="audioPlayer"></audio>
+  <script>
+    const audio = document.getElementById("audio");
+    const playBtn = document.getElementById("play");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+    const shuffleBtn = document.getElementById("shuffleBtn");
+    const repeatBtn = document.getElementById("repeatBtn");
+    const muteBtn = document.getElementById("muteBtn");
+    const volumeSlider = document.getElementById("volumeSlider");
+    const progressContainer = document.getElementById("progress-container");
+    const progressBar = document.getElementById("progress-bar");
+    const playerImg = document.getElementById("player-img");
+    const playerTitle = document.getElementById("player-title");
+    const playerArtist = document.getElementById("player-artist");
 
-<script>
-/* Data */
-let tracks=[
-  {title:'THEETHIRIAI',artist:'Sid Sriram',img:'t.jpg',url:'t1.mp3'},
-  {title:'MONICA',artist:'Anirudh',img:'c.jpg',url:'c1.mp3'},
-  {title:'ENNODU NEE IRUNTHAL',artist:'Sid Sriram',img:'e.jpg',url:'e.mp3'},
-  {title:'Sunset Ride',artist:'Anirudh',img:'https://source.unsplash.com/random/204x200?album',url:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3'},
-  {title:'Night Sky',artist:'Sid Sriram',img:'https://source.unsplash.com/random/205x205?music',url:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3'},
-  {title:'Heartbeat',artist:'Sid Sriram',img:'https://source.unsplash.com/random/206x206?audio',url:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3'},
-  {title:'Starlight',artist:'Anirudh',img:'https://source.unsplash.com/random/207x207?artist',url:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3'},
-  {title:'Pulse',artist:'Sid Sriram',img:'https://source.unsplash.com/random/208x208?beats',url:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3'},
-  {title:'Spark',artist:'Anirudh',img:'https://source.unsplash.com/random/209x209?dj',url:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3'},
-  {title:'Echoes',artist:'Sid Sriram',img:'https://source.unsplash.com/random/210x210?musicvibe',url:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3'}
-];
+    let currentTrackIndex = 0;
+    let isShuffle = false;
+    let repeatMode = "off"; // "off" | "one" | "all"
+    const tracks = document.querySelectorAll(".track");
 
-let currentIndex=0,shuffle=false,repeat=false;
-/* render everything */
-function render(){
-  // Featured carousel on home
-  let fc=document.getElementById('featuredCarousel');
-  tracks.slice(0,5).forEach((t,i)=>{
-    let div=document.createElement('div');
-    div.className='card';
-    div.innerHTML=`<img src="${t.img}"><div class="card-title">${t.title}</div><div class="card-artist">${t.artist}</div>`;
-    div.onclick=()=> playTrack(i);
-    fc.appendChild(div);
-  });
-  // All tracks
-  let tg=document.getElementById('tracksGrid');
-  tracks.forEach((t,i)=>{
-    let c=document.createElement('div');
-    c.className='card';
-    c.innerHTML=`<img src="${t.img}"><div class="card-title">${t.title}</div><div class="card-artist">${t.artist}</div>`;
-    c.onclick=()=> playTrack(i);
-    tg.appendChild(c);
-  });
-  // Playlist page
-  let pg=document.getElementById('playlistGrid');
-  tracks.forEach((t,i)=>{
-    let c=document.createElement('div');
-    c.className='card';
-    c.innerHTML=`<img src="${t.img}"><div class="card-title">${t.title}</div><div class="card-artist">${t.artist}</div>`;
-    c.onclick=()=> playTrack(i);
-    pg.appendChild(c);
-  });
-  // Artists page
-  let ag=document.getElementById('artistGrid');
-  let artists=[...new Set(tracks.map(t=>t.artist))];
-  artists.forEach(a=>{
-    let f=tracks.find(t=>t.artist===a);
-    let d=document.createElement('div');
-    d.className='card';
-    d.innerHTML=`<img src="sid.jpg,"><div class="card-title">${a}</div>`;
-    ag.appendChild(d);
-  });
-  updateQueue();
-}
-render();
+    function loadTrack(index) {
+      const track = tracks[index];
+      audio.src = track.getAttribute("data-src");
+      playerImg.src = track.getAttribute("data-img");
+      playerTitle.textContent = track.getAttribute("data-title");
+      playerArtist.textContent = track.getAttribute("data-artist");
+    }
 
-/* switching tabs */
-function openTab(id,el){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.nav-link').forEach(a=>a.classList.remove('active'));
-  if(el) el.classList.add('active');
-}
+    function playTrack() {
+      audio.play();
+      playBtn.textContent = "⏸";
+    }
 
-/* audio player hooks */
-let audio=document.getElementById('audioPlayer'),
-    cover=document.getElementById('nowCover'),
-    nowTitle=document.getElementById('nowTitle'),
-    nowArtist=document.getElementById('nowArtist'),
-    progress=document.getElementById('progress'),
-    playBtn=document.getElementById('playBtn');
+    function pauseTrack() {
+      audio.pause();
+      playBtn.textContent = "▶";
+    }
 
-function playTrack(i){
-  currentIndex=i;
-  audio.src=tracks[i].url;
-  cover.src=tracks[i].img;
-  nowTitle.innerText=tracks[i].title;
-  nowArtist.innerText=tracks[i].artist;
-  audio.play();
-  playBtn.innerText='❚❚';
-  updateQueue();
-}
+    playBtn.addEventListener("click", () => {
+      if (audio.paused) {
+        playTrack();
+      } else {
+        pauseTrack();
+      }
+    });
 
-playBtn.onclick=function(){
-  if(audio.paused){audio.play();playBtn.innerText='❚❚';}
-  else{audio.pause();playBtn.innerText='▶';}
-};
+    prevBtn.addEventListener("click", () => {
+      if (isShuffle) {
+        currentTrackIndex = Math.floor(Math.random() * tracks.length);
+      } else {
+        currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+      }
+      loadTrack(currentTrackIndex);
+      playTrack();
+    });
 
-audio.ontimeupdate=function(){
-  progress.style.width=(audio.currentTime/audio.duration)*100+'%';
-};
+    nextBtn.addEventListener("click", () => {
+      if (isShuffle) {
+        currentTrackIndex = Math.floor(Math.random() * tracks.length);
+      } else {
+        currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+      }
+      loadTrack(currentTrackIndex);
+      playTrack();
+    });
 
-function nextTrack(){
-  currentIndex = shuffle?Math.floor(Math.random()*tracks.length):(currentIndex+1)%tracks.length;
-  playTrack(currentIndex);
-}
-function prevTrack(){
-  currentIndex = shuffle?Math.floor(Math.random()*tracks.length):(currentIndex-1+tracks.length)%tracks.length;
-  playTrack(currentIndex);
-}
-function toggleShuffle(){shuffle=!shuffle;alert('Shuffle '+(shuffle?'ON':'OFF'));}
-function toggleRepeat(){repeat=!repeat;alert('Repeat '+(repeat?'ON':'OFF'));}
-audio.onended=function(){repeat?playTrack(currentIndex):nextTrack();};
+    // Progress bar
+    audio.addEventListener("timeupdate", () => {
+      const progress = (audio.currentTime / audio.duration) * 100;
+      progressBar.style.width = progress + "%";
+    });
 
-/* queue in mini-queue */
-function updateQueue(){
-  const q=document.getElementById('miniQueue'); q.innerHTML='';
-  for(let i=currentIndex+1;i<tracks.length;i++){
-    let e=document.createElement('div');
-    e.style.padding='4px 0';e.style.borderBottom='1px solid #333';
-    e.innerText=tracks[i].title+' - '+tracks[i].artist;
-    q.appendChild(e);
-  }
-}
+    progressContainer.addEventListener("click", (e) => {
+      const width = progressContainer.clientWidth;
+      const clickX = e.offsetX;
+      const duration = audio.duration;
+      audio.currentTime = (clickX / width) * duration;
+    });
 
-/* search */
-function liveSearch(val){
-  val=val.toLowerCase();
-  document.querySelectorAll('.card').forEach(c=>{
-    let t=(c.innerText||'').toLowerCase();
-    c.style.display= t.includes(val)?'block':'none';
-  });
-}
+    // Handle track end
+    audio.addEventListener("ended", () => {
+      if (repeatMode === "one") {
+        playTrack();
+      } else if (isShuffle) {
+        currentTrackIndex = Math.floor(Math.random() * tracks.length);
+        loadTrack(currentTrackIndex);
+        playTrack();
+      } else {
+        currentTrackIndex++;
+        if (currentTrackIndex >= tracks.length) {
+          if (repeatMode === "all") {
+            currentTrackIndex = 0;
+            loadTrack(currentTrackIndex);
+            playTrack();
+          } else {
+            pauseTrack();
+          }
+        } else {
+          loadTrack(currentTrackIndex);
+          playTrack();
+        }
+      }
+    });
 
-/* keyboard controls */
-document.onkeydown=function(e){
-  if(e.code==='Space'){e.preventDefault();playBtn.click();}
-  if(e.code==='ArrowRight'){nextTrack();}
-  if(e.code==='ArrowLeft'){prevTrack();}
-  if(e.key==='s'){toggleShuffle();}
-  if(e.key==='r'){toggleRepeat();}
-};
+    // Track click selection
+    tracks.forEach((track, index) => {
+      track.addEventListener("click", () => {
+        currentTrackIndex = index;
+        loadTrack(index);
+        playTrack();
+      });
+    });
 
-</script>
+    // Shuffle toggle
+    shuffleBtn.addEventListener("click", () => {
+      isShuffle = !isShuffle;
+      shuffleBtn.style.color = isShuffle ? "limegreen" : "white";
+    });
+
+    // Repeat toggle
+    repeatBtn.addEventListener("click", () => {
+      if (repeatMode === "off") {
+        repeatMode = "all";
+        repeatBtn.textContent = "🔁";
+        repeatBtn.style.color = "limegreen";
+      } else if (repeatMode === "all") {
+        repeatMode = "one";
+        repeatBtn.textContent = "🔂";
+        repeatBtn.style.color = "limegreen";
+      } else {
+        repeatMode = "off";
+        repeatBtn.textContent = "🔁";
+        repeatBtn.style.color = "white";
+      }
+    });
+
+    // Volume control
+    volumeSlider.addEventListener("input", () => {
+      audio.volume = volumeSlider.value;
+      muteBtn.textContent = audio.volume == 0 ? "🔇" : "🔊";
+    });
+
+    muteBtn.addEventListener("click", () => {
+      if (audio.muted) {
+        audio.muted = false;
+        muteBtn.textContent = "🔊";
+      } else {
+        audio.muted = true;
+        muteBtn.textContent = "🔇";
+      }
+    });
+
+    // Load first track
+    loadTrack(currentTrackIndex);
+  </script>
 </body>
 </html>
