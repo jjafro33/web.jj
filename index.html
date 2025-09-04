@@ -17,9 +17,15 @@
     .card img { width:100%; border-radius:6px; margin-bottom:10px; }
     .card-title { font-size:14px; font-weight:bold; margin-bottom:4px; }
     .card-artist { font-size:12px; color:#b3b3b3; }
-    .player { height:80px; background:#181818; display:flex; align-items:center; justify-content:center; gap:20px; }
+    .player { height:90px; background:#181818; display:flex; align-items:center; justify-content:space-between; padding:0 20px; }
+    .player-controls { display:flex; gap:20px; align-items:center; }
     .player button { background:none; border:none; color:#fff; font-size:20px; cursor:pointer; }
     .player button:hover { color:#1DB954; }
+    .now-playing { display:flex; align-items:center; gap:12px; }
+    .now-playing img { width:56px; height:56px; border-radius:6px; }
+    .now-playing-info { display:flex; flex-direction:column; }
+    .now-title { font-size:14px; font-weight:bold; }
+    .now-artist { font-size:12px; color:#b3b3b3; }
   </style>
 </head>
 <body>
@@ -35,9 +41,18 @@
     <div class="header">Featured Songs</div>
     <div class="content" id="songs"></div>
     <div class="player">
-      <button onclick="prevSong()">⏮️</button>
-      <button onclick="togglePlay()">⏯️</button>
-      <button onclick="nextSong()">⏭️</button>
+      <div class="now-playing" id="nowPlaying">
+        <img src="" id="nowCover" alt="cover">
+        <div class="now-playing-info">
+          <div class="now-title" id="nowTitle">No song</div>
+          <div class="now-artist" id="nowArtist">-</div>
+        </div>
+      </div>
+      <div class="player-controls">
+        <button onclick="prevSong()">⏮️</button>
+        <button onclick="togglePlay()">⏯️</button>
+        <button onclick="nextSong()">⏭️</button>
+      </div>
     </div>
   </div>
 
@@ -51,11 +66,14 @@
     {title:"Bad Guy", artist:"Billie Eilish", cover:"https://i.scdn.co/image/ab67616d0000b2731c1b0f99d9db6466b7402493", src:"https://p.scdn.co/mp3-preview/10.mp3"},
     {title:"Save Your Tears", artist:"The Weeknd", cover:"https://i.scdn.co/image/ab67616d0000b27368c5b8a6e6e4e50e4a6a1c2d", src:"https://p.scdn.co/mp3-preview/11.mp3"},
     {title:"Watermelon Sugar", artist:"Harry Styles", cover:"https://i.scdn.co/image/ab67616d0000b273a23c13db4b61dc3b8a5a1e8a", src:"https://p.scdn.co/mp3-preview/12.mp3"},
-    {title:"Senorita", artist:"Shawn Mendes, Camila Cabello", cover:"https://i.scdn.co/image/ab67616d0000b2730e0f7b22d8fb5b76e9a7db41", src:"https://p.scdn.co/mp3-preview/13.mp3"},
+    {title:"Señorita", artist:"Shawn Mendes, Camila Cabello", cover:"https://i.scdn.co/image/ab67616d0000b2730e0f7b22d8fb5b76e9a7db41", src:"https://p.scdn.co/mp3-preview/13.mp3"},
     {title:"Someone You Loved", artist:"Lewis Capaldi", cover:"https://i.scdn.co/image/ab67616d0000b27335f25f6abf1a9e7b7a7e3f3e", src:"https://p.scdn.co/mp3-preview/14.mp3"}
   ];
 
   const songsDiv = document.getElementById("songs");
+  const nowTitle = document.getElementById("nowTitle");
+  const nowArtist = document.getElementById("nowArtist");
+  const nowCover = document.getElementById("nowCover");
   let currentIndex = 0;
   const audio = new Audio();
 
@@ -71,17 +89,30 @@
     currentIndex = i;
     audio.src = songs[i].src;
     audio.play();
+    updateNowPlaying();
   }
+
   function togglePlay() {
-    if (audio.paused) audio.play(); else audio.pause();
+    if (audio.src === "") playSong(0);
+    else if (audio.paused) audio.play(); 
+    else audio.pause();
   }
+
   function prevSong() {
     currentIndex = (currentIndex - 1 + songs.length) % songs.length;
     playSong(currentIndex);
   }
+
   function nextSong() {
     currentIndex = (currentIndex + 1) % songs.length;
     playSong(currentIndex);
+  }
+
+  function updateNowPlaying() {
+    const song = songs[currentIndex];
+    nowTitle.textContent = song.title;
+    nowArtist.textContent = song.artist;
+    nowCover.src = song.cover;
   }
 </script>
 
