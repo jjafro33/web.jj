@@ -129,15 +129,16 @@
     import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js';
 
     // firebase config (you provided)
-    const firebaseConfig = {
-      apiKey: "AIzaSyDrPaWvYRRyonC2AZqc50MJKKKOMqAD1X4",
-      authDomain: "jj-music-hub.firebaseapp.com",
-      projectId: "jj-music-hub",
-      storageBucket: "jj-music-hub.firebasestorage.app",
-      messagingSenderId: "47008912149",
-      appId: "1:47008912149:web:7fa67b0670e8e743c50f1c",
-      measurementId: "G-YGS1JY7WZV"
-    };
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDrPaWvYRRyonC2AZqc50MJKKKOMqAD1X4",
+  authDomain: "jj-music-hub.firebaseapp.com",
+  projectId: "jj-music-hub",
+  storageBucket: "jj-music-hub.firebasestorage.app",
+  messagingSenderId: "47008912149",
+  appId: "1:47008912149:web:7fa67b0670e8e743c50f1c",
+  measurementId: "G-YGS1JY7WZV"
+};
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
