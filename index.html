@@ -10,7 +10,9 @@
     .sidebar a { color:#b3b3b3; text-decoration:none; margin:10px 0; font-size:14px; }
     .sidebar a:hover { color:#fff; }
     .main { flex:1; display:flex; flex-direction:column; }
-    .header { padding:20px; font-size:20px; font-weight:bold; }
+    .header { padding:20px; font-size:20px; font-weight:bold; display:flex; justify-content:space-between; align-items:center; }
+    .search-bar { background:#282828; border:none; padding:8px 12px; border-radius:20px; color:#fff; width:200px; }
+    .search-bar:focus { outline:2px solid #1DB954; }
     .content { flex:1; overflow-y:auto; padding:20px; display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:20px; }
     .card { background:#181818; padding:15px; border-radius:8px; cursor:pointer; transition:.3s; }
     .card:hover { background:#282828; }
@@ -22,7 +24,7 @@
     .player button { background:none; border:none; color:#fff; font-size:20px; cursor:pointer; }
     .player button:hover { color:#1DB954; }
     .now-playing { display:flex; align-items:center; gap:12px; }
-    .now-playing img { width:56px; height:56px; border-radius:6px; }
+    .now-playing img { width:56px; height:56px; border-radius:6px; object-fit:cover; }
     .now-playing-info { display:flex; flex-direction:column; }
     .now-title { font-size:14px; font-weight:bold; }
     .now-artist { font-size:12px; color:#b3b3b3; }
@@ -38,7 +40,10 @@
   </div>
 
   <div class="main">
-    <div class="header">Featured Songs</div>
+    <div class="header">
+      <div>Featured Songs</div>
+      <input type="text" id="searchInput" class="search-bar" placeholder="Search...">
+    </div>
     <div class="content" id="songs"></div>
     <div class="player">
       <div class="now-playing" id="nowPlaying">
@@ -74,16 +79,23 @@
   const nowTitle = document.getElementById("nowTitle");
   const nowArtist = document.getElementById("nowArtist");
   const nowCover = document.getElementById("nowCover");
+  const searchInput = document.getElementById("searchInput");
+
   let currentIndex = 0;
   const audio = new Audio();
 
-  songs.forEach((song, i) => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `<img src="${song.cover}"><div class="card-title">${song.title}</div><div class="card-artist">${song.artist}</div>`;
-    card.onclick = () => playSong(i);
-    songsDiv.appendChild(card);
-  });
+  function renderSongs(filter="") {
+    songsDiv.innerHTML = "";
+    songs.forEach((song, i) => {
+      if(song.title.toLowerCase().includes(filter) || song.artist.toLowerCase().includes(filter)) {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `<img src="${song.cover}"><div class="card-title">${song.title}</div><div class="card-artist">${song.artist}</div>`;
+        card.onclick = () => playSong(i);
+        songsDiv.appendChild(card);
+      }
+    });
+  }
 
   function playSong(i) {
     currentIndex = i;
@@ -114,6 +126,14 @@
     nowArtist.textContent = song.artist;
     nowCover.src = song.cover;
   }
+
+  searchInput.addEventListener("input", () => {
+    const filter = searchInput.value.toLowerCase();
+    renderSongs(filter);
+  });
+
+  // initial render
+  renderSongs();
 </script>
 
 </body>
